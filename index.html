@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>手写板签名DEMO</title>
+    <script src="js/jquery-3.2.1.min.js"></script>
+    <script src="js/jSignature.min.js"></script>
+    <link rel="stylesheet" href="css/index.css">
+</head>
+<body>
+    <p class="signTip">请按着鼠标签名</p>
+    <!-- sign area -->
+    <div id="signature"></div>
+    <div class="buttonWrap">
+        <input type="button" value="重置" id="reset"/>
+        <input type="button" value="转换为图片" id="changeToImg"/>
+        <input type="button" value="下载" id="download"/>
+    </div>
+    <!-- img show -->
+    <p>图片预览：</p>
+    <div id="imgShow"></div>
+
+    <script>
+        $(function () {
+            const signObj = $('#signature');
+
+            signObj.jSignature({'UndoButton': true}); // init canvas，{'UndoButton': true} means show "Undo last stroke" button
+
+            /**
+             * reset canvas, clear
+             */
+            $('#reset').click(function () {
+                signObj.jSignature("reset");
+            })
+
+            /**
+             * change to img
+             */
+            $('#changeToImg').click(function () {
+                convertToImg();
+            })
+
+            /**
+             * download sign img
+             */
+            $('#download').click(function () {
+                if ($('#imgShow img').length == 0) {
+                    convertToImg();
+                }
+                downloadImg('pic.png', $('#imgShow img').attr("src"));
+            })
+        })
+
+        /**
+         *  conver sign to img
+         */
+        function convertToImg() {
+            let dataStr = $("#signature").jSignature("getData");
+            // new img to show signature
+            let img = new Image();
+            img.src = dataStr;
+            $(img).appendTo($('#imgShow'));
+        }
+
+        /**
+         * convert Base64Url to Blob
+         */
+        function convertBase64UrlToBlob(_url) {
+            let bytes = window.atob(_url.split(',')[1]); //
+            let ab = new ArrayBuffer(bytes.length);
+            let ua = new Uint8Array(ab);
+            for (let i = 0; i < bytes.length; i++) {
+                ua[i] = bytes.charCodeAt(i);
+            }
+            return new Blob( [ab] , {type : 'image/png'});
+        }
+
+        /**
+         * download img
+         * @param name img name
+         * @param url img url
+         */
+        function downloadImg(name, url) {
+            let aDom = document.createElement('a');
+
+            let blob = convertBase64UrlToBlob(url);
+
+            aDom.download = name;
+            aDom.href = URL.createObjectURL(blob);
+            aDom.click();
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,13 @@
+.signTip{
+    color: red;
+    font-weight: bold;
+}
+
+#signature{
+    border: 2px dotted black;
+    background-color: lightgrey;
+}
+
+.buttonWrap{
+    margin: 20px 0px;
+}
