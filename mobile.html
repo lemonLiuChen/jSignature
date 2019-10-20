@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>手写板签名DEMO</title>
+    <script src="js/jquery-3.2.1.min.js"></script>
+    <script src="js/font_size.js"></script>
+    <script src="js/jSignature.min.js"></script>
+    <link rel="stylesheet" href="css/mobile.css">
+</head>
+<body>
+    <div class="signature_wrap">
+        <p class="signTip">请按着鼠标签名</p>
+        <!-- sign area -->
+        <div id="signature"></div>
+        <div class="buttonWrap">
+            <span class="lineWidth_wrap">
+                <input type="range" class="tran_range" min="1" max="20" value="2" onchange="change_lineWidth(this)" />
+                <div>
+                    <span class="lineWidth_btn_left">细</span>
+                    <span class="lineWidth_btn_right">粗</span>
+                </div>
+            </span>
+            <!-- <input type="button" value="重置" id="reset"/>
+            <input type="button" value="转换为图片" id="changeToImg"/>
+            <input type="button" value="下载" id="download"/> -->
+            <span class="bor_radius_btn" id="reset">清除内容</span>
+
+            <span class="float_right">
+                <span data-color="#000" class="color_btn blank active"></span>
+                <span data-color="#f40d0d" class="color_btn red"></span>
+                <span data-color="#1EAFE9" class="color_btn blue"></span>
+            </span>
+        </div>
+    </div>
+    <!-- img show -->
+    <p>图片预览：</p>
+    <div id="imgShow"></div>
+
+    <script>
+        var signObj = $('#signature');
+        $(function () {
+            //const signObj = $('#signature');
+
+            signObj.jSignature({'UndoButton': false, lineWidth:2, color: '#000'}); // init canvas，{'UndoButton': true} means show "Undo last stroke" button
+
+            /**
+             * reset canvas, clear
+             */
+            $('#reset').click(function () {
+                signObj.jSignature("reset");
+            })
+
+            /**
+             * change to img
+             */
+            $('#changeToImg').click(function () {
+                convertToImg();
+            })
+
+            /**
+             * download sign img
+             */
+            $('#download').click(function () {
+                if ($('#imgShow img').length == 0) {
+                    convertToImg();
+                }
+                downloadImg('pic.png', $('#imgShow img').attr("src"));
+            })
+
+            $(".color_btn").click(function () {
+                $(this).addClass("active").siblings(".color_btn").removeClass("active");
+                signObj.jSignature("setColor", $(this).attr("data-color"));
+            })
+        })
+
+        /**
+         *  conver sign to img
+         */
+        function convertToImg() {
+            let dataStr = $("#signature").jSignature("getData");
+            // new img to show signature
+            let img = new Image();
+            img.src = dataStr;
+            $(img).appendTo($('#imgShow'));
+        }
+
+        /**
+         * convert Base64Url to Blob
+         */
+        function convertBase64UrlToBlob(_url) {
+            let bytes = window.atob(_url.split(',')[1]); //
+            let ab = new ArrayBuffer(bytes.length);
+            let ua = new Uint8Array(ab);
+            for (let i = 0; i < bytes.length; i++) {
+                ua[i] = bytes.charCodeAt(i);
+            }
+            return new Blob( [ab] , {type : 'image/png'});
+        }
+
+        /**
+         * download img
+         * @param name img name
+         * @param url img url
+         */
+        function downloadImg(name, url) {
+            let aDom = document.createElement('a');
+
+            let blob = convertBase64UrlToBlob(url);
+
+            aDom.download = name;
+            aDom.href = URL.createObjectURL(blob);
+            aDom.click();
+        }
+
+        /**
+         * @desc 修改签名线条宽度
+         */
+        function change_lineWidth(obj) {
+            var val = $(obj).val();
+            signObj.jSignature('setLineWidth', val);
+        }
+    </script>
+</body>
+</html>
