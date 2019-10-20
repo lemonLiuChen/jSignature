@@ -1,13 +1,134 @@
+.float_right{
+	float: right;
+}
 .signTip{
     color: red;
     font-weight: bold;
+    height: 40px;
+    padding-left: 20px;
+    border-bottom: 1px solid #e8e8e8;
 }
 
-#signature{
-    border: 2px dotted black;
-    background-color: lightgrey;
+.signature_wrap{
+    border: 1px solid #e8e8e8;
 }
 
 .buttonWrap{
-    margin: 20px 0px;
+    margin: 20px;
+}
+.lineWidth_wrap{
+	position: relative; 
+	display: inline-block; 
+	font-size: 12px; 
+	vertical-align: middle;
+}
+.lineWidth_btn_right{
+	float: right;
+}
+input.tran_range[type='range'] {
+    box-sizing: border-box;
+    overflow: visible;
+    -webkit-appearance: none;
+    width: 150px;
+    height: 30px;
+    padding: 0 2px;
+    border-radius: 5px;
+    background: transparent;
+    font-size: 1em;
+    cursor: pointer;
+    vertical-align: middle;
+}
+input.tran_range[type='range']::-webkit-slider-runnable-track{
+    -webkit-appearance: none;
+    /* because IE */
+    
+    border: none;
+    width: 150px;
+    height: 5px;
+    border-radius: 5px;
+    background: #e8e8e8;
+}
+input.tran_range[type='range']::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    /* weird shit, Chrome */
+    margin-top: -8px;
+    border: none;
+     width: 0; 
+     height: 0;
+     border-width: 8px;
+     border-style: solid;
+     border-color:#1EAFE9 transparent transparent transparent;
+}
+input.tran_range[type='range']::-moz-range-track{
+    -webkit-appearance: none;
+    /* because IE */
+    
+    border: none;
+    width: 150px;
+    height: 5px;
+    border-radius: 5px;
+    background: #e8e8e8;
+}
+input.tran_range[type='range']::-moz-range-thumb{
+    -webkit-appearance: none;
+    /* weird shit, Chrome */
+    margin-top: -8px;
+    border: none;
+     width: 0; 
+     height: 0;
+     border-width: 8px;
+     border-style: solid;
+     border-color:#1EAFE9 transparent transparent transparent;
+}
+input.tran_range[type='range']::-ms-track{
+    -webkit-appearance: none;
+    /* because IE */
+    
+    border: none;
+    width: 150px;
+    height: 5px;
+    border-radius: 5px;
+    background: #e8e8e8;
+}
+input.tran_range[type='range']::-ms-thumb {
+    -webkit-appearance: none;
+    /* weird shit, Chrome */
+    margin-top: -8px;
+    border: none;
+     width: 0; 
+     height: 0;
+     border-width: 8px;
+     border-style: solid;
+     border-color:#1EAFE9 transparent transparent transparent;
+}
+input.tran_range[type='range']::-ms-fill-lower,
+input.tran_range[type='range']::-ms-fill-upper {
+    background: transparent;
+}
+input.tran_range[type='range']::-ms-tooltip {
+    display: none;
+}
+input.tran_range[type='range']:focus {
+    outline: none;
+}
+.color_btn{
+	display: inline-block;
+	width: 10px;
+	height: 10px;
+	border-radius: 50%;
+	margin-right: 10px;
+	cursor: pointer;
+}
+.color_btn.red{
+	background-color: #f40d0d;
+}
+.color_btn.blank{
+	background-color: #000;
+}
+.color_btn.blue{
+	background-color: #1EAFE9;
+}
+.color_btn.active{
+	width: 15px;
+	height: 15px;
 }

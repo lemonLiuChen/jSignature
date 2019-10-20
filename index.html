@@ -8,23 +8,39 @@
     <link rel="stylesheet" href="css/index.css">
 </head>
 <body>
-    <p class="signTip">请按着鼠标签名</p>
-    <!-- sign area -->
-    <div id="signature"></div>
-    <div class="buttonWrap">
-        <input type="button" value="重置" id="reset"/>
-        <input type="button" value="转换为图片" id="changeToImg"/>
-        <input type="button" value="下载" id="download"/>
+    <div class="signature_wrap">
+        <p class="signTip">请按着鼠标签名</p>
+        <!-- sign area -->
+        <div id="signature"></div>
+        <div class="buttonWrap">
+            <span class="lineWidth_wrap">
+                <input type="range" class="tran_range" min="1" max="20" value="2" onchange="change_lineWidth(this)" />
+                <div>
+                    <span class="lineWidth_btn_left">细</span>
+                    <span class="lineWidth_btn_right">粗</span>
+                </div>
+            </span>
+            <input type="button" value="重置" id="reset"/>
+            <input type="button" value="转换为图片" id="changeToImg"/>
+            <input type="button" value="下载" id="download"/>
+
+            <span class="float_right">
+                <span data-color="#000" class="color_btn blank active"></span>
+                <span data-color="#f40d0d" class="color_btn red"></span>
+                <span data-color="#1EAFE9" class="color_btn blue"></span>
+            </span>
+        </div>
     </div>
     <!-- img show -->
     <p>图片预览：</p>
     <div id="imgShow"></div>
 
     <script>
+        var signObj = $('#signature');
         $(function () {
-            const signObj = $('#signature');
+            //const signObj = $('#signature');
 
-            signObj.jSignature({'UndoButton': true}); // init canvas，{'UndoButton': true} means show "Undo last stroke" button
+            signObj.jSignature({'UndoButton': false, lineWidth:2, color: '#000'}); // init canvas，{'UndoButton': true} means show "Undo last stroke" button
 
             /**
              * reset canvas, clear
@@ -48,6 +64,11 @@
                     convertToImg();
                 }
                 downloadImg('pic.png', $('#imgShow img').attr("src"));
+            })
+
+            $(".color_btn").click(function () {
+                $(this).addClass("active").siblings(".color_btn").removeClass("active");
+                signObj.jSignature("setColor", $(this).attr("data-color"));
             })
         })
 
@@ -88,6 +109,14 @@
             aDom.download = name;
             aDom.href = URL.createObjectURL(blob);
             aDom.click();
+        }
+
+        /**
+         * @desc 修改签名线条宽度
+         */
+        function change_lineWidth(obj) {
+            var val = $(obj).val();
+            signObj.jSignature('setLineWidth', val);
         }
     </script>
 </body>
