@@ -10,3 +10,8 @@
 
 `$('#signature').jSignature("setLineWidth", "4"); // 设置线条粗细  `  
  `$('#signature').jSignature("setColor", "#1EAFE9"); // 设置线条颜色`
+
+**判断是否签名:**  
+if ($("#signature").jSignature("getData", "native").length == 0) {
+  //如果等于0，就说明没有签名或者签名已经被清除
+}
