@@ -132,3 +132,22 @@ input.tran_range[type='range']:focus {
 	width: 15px;
 	height: 15px;
 }
+
+.signature_container {
+    position: relative;
+}
+
+.sign_placeholder {
+    position: absolute;
+    left: 0px;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    font-size: 58px;
+    color: #ccc;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    letter-spacing: 10px;
+    pointer-events: none;
+}
